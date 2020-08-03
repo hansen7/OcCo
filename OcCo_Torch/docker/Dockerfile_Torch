@@ -1,0 +1,29 @@
+# https://github.com/pytorch/pytorch/issues/31171#issuecomment-565887573
+FROM pytorch/pytorch:1.3-cuda10.1-cudnn7-devel
+
+WORKDIR /workspace/OcCo_Torch
+RUN apt-get update
+RUN apt-get -y install apt-file apt-utils 
+RUN apt-file update
+RUN apt-get -y install build-essential libcap-dev vim screen
+COPY ./Requirements_Torch.txt /workspace/OcCo_Torch
+RUN pip install -r Requirements_Torch.txt
+
+RUN mkdir /home/hcw
+RUN chmod -R 777 /home/hcw
+RUN chmod 777 /usr/bin
+RUN chmod 777 /bin
+RUN chmod 777 /usr/local/
+RUN apt-get -y update
+RUN apt-get -y install libgl1-mesa-glx
+
+# RUN apt-get -y install gcc
+# RUN apt-get -y install g++
+# RUN apt-get -y upgrade libstdc++6
+
+# Optional: Install the TensorRT runtime (must be after CUDA install)
+# RUN apt update
+# RUN apt -y install libnvinfer4=4.1.2-1+cuda9.0
+
+RUN useradd hcw
+WORKDIR /workspace/OcCo_Torch

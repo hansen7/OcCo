@@ -1,0 +1,47 @@
+FROM tensorflow/tensorflow:1.12.0-gpu-py3
+
+WORKDIR /workspace/OcCo_TF
+RUN mkdir /home/hcw
+RUN chmod -R 777 /home/hcw
+RUN chmod 777 /usr/bin
+RUN chmod 777 /bin
+RUN chmod 777 /usr/local/
+RUN apt-get -y update
+RUN apt-get -y install vim screen libgl1-mesa-glx
+COPY ./Requirements_TF.txt /workspace/OcCo_TF
+RUN pip install -r ../Requirements_TF.txt
+COPY ./pc_distance /workspace/OcCo_TF/pc_distance
+# RUN apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
+# RUN apt-get install wget
+# RUN wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
+# RUN yes|apt -y install ./cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
+# RUN wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
+# RUN apt -y install ./nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
+
+# RUN apt-get update
+# Install the NVIDIA driver
+# Issue with driver install requires creating /usr/lib/nvidia
+# RUN mkdir /usr/lib/nvidia
+# RUN apt-get -y -o Dpkg::Options::="--force-overwrite" install --no-install-recommends nvidia-410
+# Reboot. Check that GPUs are visible using the command: nvidia-smi
+
+# Install CUDA and tools. Include optional NCCL 2.x
+# RUN apt install -y --allow-downgrades cuda9.0 cuda-cublas-9-0 cuda-cufft-9-0 cuda-curand-9-0 \
+#    cuda-cusolver-9-0 cuda-cusparse-9-0 libcudnn7=7.2.1.38-1+cuda9.0 \
+#    libnccl2=2.2.13-1+cuda9.0 cuda-command-line-tools-9-0
+
+# Optional: Install the TensorRT runtime (must be after CUDA install)
+# RUN apt update
+# RUN apt -y install libnvinfer4=4.1.2-1+cuda9.0
+WORKDIR /workspace/OcCo_TF/pc_distance
+RUN make
+RUN chmod -R 777  /workspace/OcCo_TF/pc_distance
+# RUN ln -s /usr/local/cuda/lib64/libcudart.so.10.0 /usr/local/cuda/lib64/libcudart.so.9.0
+RUN ln -s /usr/local/lib/python3.5/dist-packages/tensorflow/libtensorflow_framework.so /usr/local/lib/python3.5/dist-packages/tensorflow/libtensorflow_framework.so.1
+RUN mkdir -p /usr/local/nvidia/lib
+RUN cp /usr/local/lib/python3.5/dist-packages/tensorflow/libtensorflow_framework.so /usr/local/nvidia/lib/libtensorflow_framework.so.1
+
+
+RUN useradd hcw
+USER hcw
+WORKDIR /workspace/OcCo_TF
