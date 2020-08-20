@@ -1,7 +1,7 @@
 ## OcCo: Occlusion Completion for Point Cloud Pre-Training
 This repository is the official implementation of "OcCo: Occlusion Completion for Point Cloud Pre-Training"
 
-[Paper] [[Project Page](https://hansen7.github.io/OcCo/)] [Poster]
+[Paper] [[Project Page](https://hansen7.github.io/OcCo/)] 
 
 ### Intro
 
@@ -9,11 +9,11 @@ This repository is the official implementation of "OcCo: Occlusion Completion fo
 
 In this work, we train a completion model that learns how to reconstruct the occluded points, given the partial point cloud. In this way, our method learns a pre-trained representation that can identify the visual constraints inherently embedded in real-world point clouds. 
 
-We call our method Occlusion Completion (OcCo). We demonstrate that OcCo learns representations that: improve generalization on downstream tasks over prior pre-training methods, transfer to different datasets, reduce training time, and improve labeled sample efficiency.
+We call our method **Occlusion Completion (OcCo)**. We demonstrate that OcCo learns representations that: improve generalization on downstream tasks over prior pre-training methods, transfer to different datasets, reduce training time, and improve labeled sample efficiency.
 
 
 ### Citation
-If you find our work useful or insightful, please cite:
+If you find our work useful, please cite:
 ```
 
 ```
@@ -38,7 +38,7 @@ docker
 | - .dockerignore  # ignore the log and data folder while building up 
 ```
 
-which can be automated set up via following setups:
+which can be automated set up via following commands:
 
 ```bash
 # build up from docker images
@@ -230,6 +230,8 @@ done
 
 We recommended using relevant code snippets in [RandLA-Net](https://github.com/QingyongHu/RandLA-Net) for visualization.
 
+
+
 #### 5) Pre-Trained OcCo Checkpoints
 
 We will provide the OcCo Pre-Trained model for all the three models, you can use them for visualization of completing self-occluded point cloud, fine tuning on classification and semantic segmentation tasks.
@@ -260,7 +262,7 @@ For the details of our implementation on the data generation and training settin
 
 ##### Generated Dataset:
 
-![image](assets/data_overview_new.pdf)
+![image](assets/data_overview_new.png)
 
 ##### Completed Occluded Point Cloud:
 

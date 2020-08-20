@@ -17,8 +17,7 @@ class Model:
 		self.features = self.create_encoder(inputs, npts)
 		self.pred = self.create_decoder(self.features)
 		self.loss = self.create_loss(self.pred, labels)
-	# print(self.is_training)
-	
+
 	def create_encoder(self, inputs, npts):
 		"""PointNet encoder"""
 		
@@ -38,7 +37,6 @@ class Model:
 		
 		with tf.variable_scope('transform_net2') as sc:
 			transform = feature_transform_net(net, self.is_training, self.bn_decay, K=64)
-		# end_points['transform'] = transform
 		net_transformed = tf.matmul(tf.squeeze(net, axis=[2]), transform)
 		net_transformed = tf.expand_dims(net_transformed, [2])
 		

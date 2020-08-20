@@ -1,6 +1,6 @@
 #  Copyright (c) 2020. Author: Hanchen Wang, hc.wang96@gmail.com
 
-# Author: Wentao Yuan (wyuan1@cs.cmu.edu) 05/31/2018
+#  Author: Wentao Yuan (wyuan1@cs.cmu.edu) 05/31/2018
 
 import tensorflow as tf
 from utils.tf_util import mlp_conv, point_maxpool, point_unpool, mlp, add_train_summary, \

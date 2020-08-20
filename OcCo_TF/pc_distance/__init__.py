@@ -1,2 +1,1 @@
-#  Copyright (c) 2020. Author: Hanchen Wang, hc.wang96@gmail.com
-
+#  Copyright (c) 2020. Hanchen Wang, hw501@cam.ac.uk

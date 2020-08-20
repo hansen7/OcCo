@@ -1,6 +1,5 @@
-#  Copyright (c) 2020. Author: Hanchen Wang, hc.wang96@gmail.com
-
-# Author: Wentao Yuan (wyuan1@cs.cmu.edu) 05/31/2018
+#  Copyright (c) 2020. Hanchen Wang, hw501@cam.ac.uk
+#  Ref:
 
 import numpy as np, tensorflow as tf
 from tensorpack import dataflow

@@ -2,12 +2,11 @@
 
 # author: Hanchen Wang
 
-import os, sys
+import os, sys, tensorflow as tf
 BASE_DIR = os.path.dirname(__file__)
 sys.path.append(BASE_DIR)
 sys.path.append('../')
 sys.path.append(os.path.join(BASE_DIR, '../utils'))
-import tensorflow as tf
 from utils import tf_util
 from utils.transform_nets import input_transform_net_dgcnn
 from train_completion import BATCH_SIZE, NUM_POINT
