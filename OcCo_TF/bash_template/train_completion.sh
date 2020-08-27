@@ -2,19 +2,11 @@
 
 cd ..
 
-python train.py \
-	--gpu 7 \
-	--lmdb_train ./data/shapenet/train.lmdb \
-	--lmdb_valid ./data/shapenet/valid.lmdb \
-	--lr_decay \
-	--base_lr 0.0001 \
-	--epoch 100 \
-	--log_dir ./log/log_completion/pointnet_cd_new_shapnet_lr1e-4_b16_new \
-	--dataset shapenet8 \
-	--model_type pointnet_cd \
-	--batch_size 16 \
-	--epochs_per_save 5
-
+python train_completion.py \
+    --gpu 7 \
+    --lr_decay \
+    --batch_size 16 \
+    --log_dir ./log/completion/pcn_cd_vanilla ;
 
 #python train_completion.py \
 #	--gpu 4 \
@@ -26,4 +18,3 @@ python train.py \
 #	--lr_decay \
 #	--model_type pointnet_cd \
 #	--batch_size 8;
-

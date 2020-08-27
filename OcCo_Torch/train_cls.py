@@ -63,7 +63,7 @@ def main(args):
 
     MyLogger.logger.info('Load dataset %s' % args.dataset)
     NUM_CLASSES, TRAIN_FILES, TEST_FILES = Dataset_Loc(dataset=args.dataset, fname=args.fname,
-                                                       partial=args.partial, bn=args.partial)
+                                                       partial=args.partial, bn=args.bn)
     TRAIN_DATASET = General_CLSDataLoader_HDF5(file_list=TRAIN_FILES, num_point=1024)
     TEST_DATASET = General_CLSDataLoader_HDF5(file_list=TEST_FILES, num_point=1024)
     trainDataLoader = DataLoader(TRAIN_DATASET, batch_size=args.batch_size, shuffle=True, num_workers=4, drop_last=True)

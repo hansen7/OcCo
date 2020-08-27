@@ -140,3 +140,12 @@ def feature_transform_regularizer(trans):
         I = I.cuda()
     loss = torch.mean(torch.norm(torch.bmm(trans, trans.transpose(2, 1) - I), dim=(1, 2)))
     return loss
+
+class encoder(nn.Module):
+    def __init__(self, num_channel=3, **kwargs):
+        super(encoder, self).__init__()
+        self.feat = PointNetEncoder(global_feat=True, channel=num_channel)
+
+    def forward(self, x):
+        feat, _, _ = self.feat(x)
+        return feat

@@ -75,6 +75,7 @@ class get_model(nn.Module):
     def expand_dims(tensor, dim):
         # substitute for tf.expand_dims:
         # https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/expand_dims
+        # another solution is: torch.unsqueeze(tensor, dim=dim)
         return tensor.unsqueeze(-1).transpose(-1, dim)
 
     def forward(self, x):
@@ -110,7 +111,7 @@ class get_loss(nn.Module):
     def dist_cd(pc1, pc2):
         chamfer_dist = ChamferDistance()
         dist1, dist2 = chamfer_dist(pc1, pc2)
-        return torch.mean(dist1) + torch.mean(dist2)
+        return (torch.mean(torch.sqrt(dist1)) + torch.mean(torch.sqrt(dist2)))/2
 
     def forward(self, coarse, fine, gt, alpha):
         return self.dist_cd(coarse, gt) + alpha * self.dist_cd(fine, gt)

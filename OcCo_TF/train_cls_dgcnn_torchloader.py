@@ -47,8 +47,8 @@ NUM_CLASSES, NUM_TRAINOBJECTS, TRAIN_FILES, VALID_FILES = Dataset_Assign(
 BATCH_SIZE, NUM_POINT = args.batch_size, args.num_points
 # DECAY_STEP = NUM_TRAINOBJECTS//BATCH_SIZE * args.decay_steps
 
-TRAIN_DATASET = General_CLSDataLoader_HDF5(root=DATA_PATH, file_list=TRAIN_FILES, num_point=1024)
-TEST_DATASET = General_CLSDataLoader_HDF5(root=DATA_PATH, file_list=VALID_FILES, num_point=1024)
+TRAIN_DATASET = General_CLSDataLoader_HDF5(file_list=TRAIN_FILES, num_point=1024)
+TEST_DATASET = General_CLSDataLoader_HDF5(file_list=VALID_FILES, num_point=1024)
 trainDataLoader = DataLoader(TRAIN_DATASET, batch_size=BATCH_SIZE, shuffle=True, num_workers=4, drop_last=True)
 testDataLoader = DataLoader(TEST_DATASET, batch_size=BATCH_SIZE, shuffle=False, num_workers=4, drop_last=True)
 # reduce the num_workers if the loaded data are huge, ref: https://github.com/pytorch/pytorch/issues/973

@@ -10,6 +10,7 @@ except:
 
 
 def mlp(features, layer_dims, bn=None, bn_params=None):
+    # doc: https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/contrib/layers/fully_connected
     for i, num_outputs in enumerate(layer_dims[:-1]):
         features = tf.contrib.layers.fully_connected(
             features, num_outputs,

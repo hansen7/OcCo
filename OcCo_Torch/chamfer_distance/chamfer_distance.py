@@ -65,9 +65,7 @@ class get_model(nn.Module):
 		self.conv1 = nn.Conv1d(channel, 128, 1)
 
 	def forward(self, x):
-		# pdb.set_trace()
-		_, D, N = x.size()  # Batch Size, Dimension of Features, Num of Points
-
+		_, D, N = x.size()
 		x = self.conv1(x)
 		x = x.view(-1, 128, 1).repeat(1, 1, 3)
 		return x
@@ -75,16 +73,25 @@ class get_model(nn.Module):
 
 if __name__ == '__main__':
 
+	import random, numpy as np
+
+	'''Sanity Check on the Consistency with TensorFlow'''
+	random.seed(100)
+	np.random.seed(100)
+
 	chamfer_dist = ChamferDistance()
-	model = get_model().to(torch.device("cuda"))
-	model.train()
+	# model = get_model().to(torch.device("cuda"))
+	# model.train()
+
+	xyz1 = np.random.randn(32, 16384, 3).astype('float32')
+	xyz2 = np.random.randn(32, 1024, 3).astype('float32')
 
 	# pdb.set_trace()
-	pc1 = torch.randn(1, 100, 3).cuda().contiguous()
-	pc1_new = model(pc1.transpose(2, 1))
-	pc2 = torch.randn(1, 50, 3).cuda().contiguous()
+	# pc1 = torch.randn(1, 100, 3).cuda().contiguous()
+	# pc1_new = model(pc1.transpose(2, 1))
+	# pc2 = torch.randn(1, 50, 3).cuda().contiguous()
 
-	dist1, dist2 = chamfer_dist(pc1_new, pc2)
+	dist1, dist2 = chamfer_dist(torch.Tensor(xyz1), torch.Tensor(xyz2))
 	loss = (torch.mean(dist1)) + (torch.mean(dist2))
-
-	loss.backward()
+	print(loss)
+# loss.backward()

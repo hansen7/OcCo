@@ -5,6 +5,7 @@
 #  Ref: https://github.com/AnTao97/UnsupervisedPointCloudReconstruction/blob/master/model.py
 
 
+
 import sys, torch, itertools, numpy as np, torch.nn as nn
 from pointnet_util import PointNetEncoder
 sys.path.append("../chamfer_distance")
@@ -103,7 +104,7 @@ class get_loss(nn.Module):
     def dist_cd(pc1, pc2):
         chamfer_dist = ChamferDistance()
         dist1, dist2 = chamfer_dist(pc1, pc2)
-        return torch.mean(dist1) + torch.mean(dist2)
+        return (torch.mean(torch.sqrt(dist1)) + torch.mean(torch.sqrt(dist2)))/2
 
     def forward(self, coarse, fine, gt, alpha):
         return self.dist_cd(coarse, gt) + alpha * self.dist_cd(fine, gt)

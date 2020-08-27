@@ -1,6 +1,4 @@
 #  Copyright (c) 2020. Hanchen Wang, hw501@cam.ac.uk
-#  Ref: https://github.com/wentaoyuan/pcn/blob/master/models/pcn_cd.py
-#  Sanity Check: https://github.com/vinits5/learning3d/blob/master/models/pcn.py
 
 import torch, torch.nn as nn, torch.nn.functional as F
 
@@ -37,6 +35,15 @@ class PCNEncoder(nn.Module):
         else:  # concatenate global and local features, for segmentation tasks
             x = x.view(-1, 1024, 1).repeat(1, 1, N)
             return torch.cat([x, pointfeat], 1)
+
+
+class encoder(nn.Module):
+    def __init__(self, num_channel=3, **kwargs):
+        super(encoder, self).__init__()
+        self.feat = PCNEncoder(global_feat=True, channel=num_channel)
+
+    def forward(self, x):
+        return self.feat(x)
 
 
 if __name__ == "__main__":

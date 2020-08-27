@@ -1,9 +1,8 @@
 #  Copyright (c) 2020. Hanchen Wang, hw501@cam.ac.uk
-
+"""Scripts for Chamfer Distance"""
 import os, tensorflow as tf
-from tensorflow.python.framework import ops  # not an error
+from tensorflow.python.framework import ops
 os.environ["LD_LIBRARY_PATH"] = "/usr/local/lib/python3.5/dist-packages/tensorflow/"
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 nn_distance_module = tf.load_op_library(os.path.join(BASE_DIR, 'tf_nndistance_so.so'))
 
@@ -19,15 +18,11 @@ def nn_distance(xyz1, xyz2):
     output: idx2:  (batch_size,#point_2)   nearest neighbor from second to first
     """
     return nn_distance_module.nn_distance(xyz1, xyz2)
-# @tf.RegisterShape('NnDistance')
-# def _nn_distance_shape(op):
-# 	shape1=op.inputs[0].get_shape().with_rank(3)
-# 	shape2=op.inputs[1].get_shape().with_rank(3)
-# 	return [tf.TensorShape([shape1.dims[0],shape1.dims[1]]),tf.TensorShape([shape1.dims[0],shape1.dims[1]]),
-# 		tf.TensorShape([shape2.dims[0],shape2.dims[1]]),tf.TensorShape([shape2.dims[0],shape2.dims[1]])]
+
+
 @ops.RegisterGradient('NnDistance')
 def _nn_distance_grad(op, grad_dist1, grad_idx1, grad_dist2, grad_idx2):
-    xyz1  =op.inputs[0]
+    xyz1 = op.inputs[0]
     xyz2 = op.inputs[1]
     idx1 = op.outputs[1]
     idx2 = op.outputs[3]
@@ -35,7 +30,7 @@ def _nn_distance_grad(op, grad_dist1, grad_idx1, grad_dist2, grad_idx2):
 
 
 if __name__ == '__main__':
-    import time, random, numpy as np
+    import random, numpy as np
     random.seed(100)
     np.random.seed(100)
 
@@ -48,16 +43,13 @@ if __name__ == '__main__':
             inp1 = tf.Variable(xyz1)
             inp2 = tf.constant(xyz2)
             reta, retb, retc, retd = nn_distance(inp1, inp2)
-            loss = tf.reduce_sum(reta) + tf.reduce_sum(retc)
+            loss = tf.reduce_mean(reta) + tf.reduce_mean(retc)
             train = tf.train.GradientDescentOptimizer(learning_rate=0.05).minimize(loss)
         sess.run(tf.initialize_all_variables())
 
-        t0 = time.time()
-        t1 = t0
         best = 1e100
-        for i in range(100):
-            trainloss, _ = sess.run([loss, train])
-            newt = time.time()
-            best = min(best, newt-t1)
-            print(i, trainloss, (newt-t0)/(i+1), best)
-            t1 = newt
+        for i in range(1):
+            # loss, _ = sess.run([loss, train])
+            loss, _ = sess.run([loss])
+            best = min(best, loss)
+            print(i, loss, best)

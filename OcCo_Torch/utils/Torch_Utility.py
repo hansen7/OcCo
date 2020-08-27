@@ -2,6 +2,7 @@
 #  Ref: https://github.com/pytorch/pytorch/issues/7068#issuecomment-487907668
 import torch, os, random, numpy as np
 
+
 def seed_torch(seed=1029):
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
@@ -17,7 +18,7 @@ def copy_parameters(model, pretrained, verbose=True):
     # ref: https://discuss.pytorch.org/t/how-to-load-part-of-pre-trained-model/1113/3
 
     model_dict = model.state_dict()
-    pretrained_dict = pretrained['model_state_dict']  # .state_dict()
+    pretrained_dict = pretrained['model_state_dict']
     pretrained_dict = {k: v for k, v in pretrained_dict.items() if
                        k in model_dict and pretrained_dict[k].size() == model_dict[k].size()}
 
@@ -33,15 +34,19 @@ def copy_parameters(model, pretrained, verbose=True):
 
 
 def weights_init(m):
+    """
+    Xavier normal initialisation for weights and zero bias,
+    find especially useful for completion and segmentation Tasks
+    """
     classname = m.__class__.__name__
-    if classname.find('Conv2d') != -1:
-        torch.nn.init.xavier_normal_(m.weight.data)
-        torch.nn.init.constant_(m.bias.data, 0.0)
-    elif classname.find('Linear') != -1:
+    if (classname.find('Conv1d') != -1) \
+            or (classname.find('Conv2d') != -1) \
+            or (classname.find('Linear') != -1):
         torch.nn.init.xavier_normal_(m.weight.data)
         torch.nn.init.constant_(m.bias.data, 0.0)
 
 
 def bn_momentum_adjust(m, momentum):
-    if isinstance(m, torch.nn.BatchNorm2d) or isinstance(m, torch.nn.BatchNorm1d):
+    if isinstance(m, torch.nn.BatchNorm2d) \
+            or isinstance(m, torch.nn.BatchNorm1d):
         m.momentum = momentum

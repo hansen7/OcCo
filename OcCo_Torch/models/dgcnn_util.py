@@ -1,7 +1,7 @@
 #  Copyright (c) 2020. Hanchen Wang, hw501@cam.ac.uk
 #  Ref: https://github.com/WangYueFt/dgcnn/blob/master/pytorch/model.py
 
-import torch
+import torch, torch.nn as nn, torch.nn.functional as F
 
 def knn(x, k):
     inner = -2 * torch.matmul(x.transpose(2, 1), x)
@@ -34,3 +34,56 @@ def get_graph_feature(x, k=20, idx=None, extra_dim=False):
     feature = torch.cat((feature-x, x), dim=3).permute(0, 3, 1, 2)
 
     return feature  # (batch_size, 2 * num_dims, num_points, k)
+
+
+class encoder(nn.Module):
+    def __init__(self, channel=3, **kwargs):
+        super(encoder, self).__init__()
+        self.bn1 = nn.BatchNorm2d(64)
+        self.bn2 = nn.BatchNorm2d(64)
+        self.bn3 = nn.BatchNorm2d(128)
+        self.bn4 = nn.BatchNorm2d(256)
+        self.bn5 = nn.BatchNorm1d(1024)
+
+        self.conv1 = nn.Sequential(nn.Conv2d(channel*2, 64, kernel_size=1, bias=False),
+                                   self.bn1,
+                                   nn.LeakyReLU(negative_slope=0.2))
+        self.conv2 = nn.Sequential(nn.Conv2d(64 * 2, 64, kernel_size=1, bias=False),
+                                   self.bn2,
+                                   nn.LeakyReLU(negative_slope=0.2))
+        self.conv3 = nn.Sequential(nn.Conv2d(64 * 2, 128, kernel_size=1, bias=False),
+                                   self.bn3,
+                                   nn.LeakyReLU(negative_slope=0.2))
+        self.conv4 = nn.Sequential(nn.Conv2d(128 * 2, 256, kernel_size=1, bias=False),
+                                   self.bn4,
+                                   nn.LeakyReLU(negative_slope=0.2))
+        self.conv5 = nn.Sequential(nn.Conv1d(256 * 2, 1024, kernel_size=1, bias=False),
+                                   self.bn5,
+                                   nn.LeakyReLU(negative_slope=0.2))
+
+    def forward(self, x):
+        batch_size = x.size()[0]
+        x = get_graph_feature(x, k=20)
+        x = self.conv1(x)
+        x1 = x.max(dim=-1, keepdim=False)[0]
+
+        x = get_graph_feature(x1, k=20)
+        x = self.conv2(x)
+        x2 = x.max(dim=-1, keepdim=False)[0]
+
+        x = get_graph_feature(x2, k=20)
+        x = self.conv3(x)
+        x3 = x.max(dim=-1, keepdim=False)[0]
+
+        x = get_graph_feature(x3, k=20)
+        x = self.conv4(x)
+        x4 = x.max(dim=-1, keepdim=False)[0]
+
+        x = torch.cat((x1, x2, x3, x4), dim=1)
+
+        x = self.conv5(x)
+        x1 = F.adaptive_max_pool1d(x, 1).view(batch_size, -1)
+        # x2 = F.adaptive_avg_pool1d(x, 1).view(batch_size, -1)
+        # x = torch.cat((x1, x2), 1)
+
+        return x1

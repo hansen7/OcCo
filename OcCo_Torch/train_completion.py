@@ -3,6 +3,7 @@
 #  Ref: https://github.com/WangYueFt/dgcnn/blob/master/tensorflow/train.py
 #  For DGCNN Encoder, We Also Use Adam + StepLR for the Unity and Simplicity
 
+
 import os, sys, time, torch, shutil, argparse, datetime, importlib, numpy as np
 sys.path.append('utils')
 sys.path.append('models')
@@ -100,12 +101,14 @@ def main(args):
     else:
         MyLogger.logger.info('No pre-trained model, start training from scratch...')
 
+    ''' IMPORTANT: for completion, no weight decay in Adam, no batch norm in decoder!'''
     optimizer = torch.optim.Adam(
         completer.parameters(),
         lr=args.lr,
         betas=(0.9, 0.999),
         eps=1e-08,
-        weight_decay=1e-4)
+        weight_decay=0)
+    # weight_decay=1e-4)
 
     # For the sake of simplicity, we save the momentum decay in the batch norm
     # scheduler = StepLR(optimizer, step_size=20, gamma=0.7) -> instead we define these manually
@@ -183,6 +186,7 @@ def main(args):
         loss.backward()
         optimizer.step()
         total_time += time.time() - start
+        writer.add_scalar('Loss', loss, step)
 
         if step % args.steps_print == 0:
             MyLogger.logger.info('epoch %d  step %d  alpha %.2f  loss %.8f  time per mini-batch %.2f s' %
@@ -211,7 +215,7 @@ def main(args):
                     eval_loss += loss
                     eval_time += time.time() - start
 
-                MyLogger.logger.info('epoch %d  step %d  validation loss %.8f' %
+                MyLogger.logger.info('epoch %d  step %d  validation  loss %.8f' %
                                      (epoch, step, eval_loss / num_eval_steps))
 
         ''' === Visualisation === '''
@@ -237,7 +241,7 @@ def main(args):
             MyLogger.logger.info('Model saved at %s/model_epoch_%d.pth\n' % (MyLogger.checkpoints_dir, epoch))
 
     MyLogger.logger.info('Training Finished, Total Time: ',
-                         datetime.timedelta(seconds=time.time() - train_start))
+                         str(datetime.timedelta(seconds=time.time() - train_start)))
 
 
 if __name__ == '__main__':

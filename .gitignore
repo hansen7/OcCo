@@ -12,6 +12,7 @@ __pycache__/
 */*.sh
 */data/*
 /render/dump
+*.ipynb
 
 # C extensions
 *.so

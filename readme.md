@@ -38,7 +38,7 @@ docker
 | - .dockerignore  # ignore the log and data folder while building up 
 ```
 
-which can be automated set up via following commands:
+which can be automatically set up as following:
 
 ```bash
 # build up from docker images
@@ -252,9 +252,9 @@ We will also provide the best OcCo checkpoints we have for the completion tasks,
 
 #### 8) Jigsaw Puzzle
 
-We also provide our implementation (developed from scratch) on pre-training point cloud models via solving 3d jigsaw puzzles tasks, the method is described in this [paper](https://papers.nips.cc/paper/9455-self-supervised-deep-learning-on-point-clouds-by-reconstructing-space.pdf), while the authors did not reprocess to our code request. The details of our implementation is reported in our paper appendix.
+We also provide our implementation (developed from scratch) on pre-training point cloud models via solving 3d jigsaw puzzles tasks as well as data generation, the method is described in this [paper](https://papers.nips.cc/paper/9455-self-supervised-deep-learning-on-point-clouds-by-reconstructing-space.pdf), while the authors did not reprocess to our code request. The details of our implementation is reported in our paper appendix.
 
-For the details of our implementation on the data generation and training settings, please refer to supplementary of our paper and  `train_jigsaw.py`, `utils/3DPC_Data_Gen.py`, `bash_template/train_jigsaw_template.sh`.
+For the details of our implementation, please refer to desciption in the appendix of our paper and  relevant code snippets, i.e.,  <a href="OcCo_Torch/train_jigsaw.py">train_jigsaw.py</a>,  <a href="OcCo_Torch/utils/3DPC_Data_Gen.py">utils/3DPC_Data_Gen.py</a> and <a href="OcCo_Torch/bash_template/train_jigsaw_template.sh">train_jigsaw_template.sh</a>.
 
 
 
@@ -270,25 +270,19 @@ For the details of our implementation on the data generation and training settin
 
 ##### Classification:
 
-<img src="assets/cls.png" alt="image" style="zoom:67%;" />
-
-
+<img src="assets/cls.png" alt="image" width="600"/>
 
 ##### Semantic Segmentation:
 
-<img src="assets/semseg.png" alt="image" style="zoom:67%;" />
-
-
+<img src="assets/semseg.png" alt="image" width="600"/>
 
 ##### Sample Efficiency:
 
-<img src="assets/eff.png" alt="image" style="zoom:67%;" />
-
-
+<img src="assets/eff.png" alt="image" width="600" />
 
 ##### Learning Efficiency:
 
-<img src="assets/lr.png" alt="image" style="zoom:67%;" />
+<img src="assets/lr.png" alt="image" width="700" />
 
 
 
