@@ -2,9 +2,9 @@ This directory contains code that generates partial point clouds objects.
 
 To start with:
 
-1. Download an Install [Blender](https://blender.org/download/)
+1. Download and Install [Blender](https://blender.org/download/)
 
-2. Create a list of normalized 3D objects to be rendered, which should be in `.obj` format, we provide `ModelNet_Flist.txt`. as a template. We also provide `PC_Normalisation.py` for normalization.
+2. Create a list of normalized 3D objects to be rendered, which should be in `.obj` format, we provide `ModelNet_Flist.txt`. as a template. We also provide <a href="PC_Normalisation.py">PC_Normalisation.py</a> for normalization.
 
 3. To generate the rendered depth image from 3d objects (you might need to install a few more supportive packages, i.e. `Imath, OpenEXR`, due to the differences in the development environments)
 
@@ -14,7 +14,7 @@ To start with:
 	blender -b -P render_depth.py ../data/modelnet40 ModelNet_Flist.txt ./dump 10
 	```
 
-	The generated intermediate files are in OpenEXR format (`*.exr`). You can also modify the intrinsics of the camera model in `Depth_Renderer.py`, which will be automatically saved in the `intrinsics.txt`.
+	The generated intermediate files are in OpenEXR format (`*.exr`). You can also modify the intrinsics of the camera model in <a href="Depth_Renderer.py">Depth_Renderer.py</a>, which will be automatically saved in the `intrinsics.txt`.
 
 4. To re-project the partial occluded point cloud from the depth image:
 
@@ -28,7 +28,7 @@ To start with:
 
 	This will convert the `*.exr` files into depth images (`*.png`) then point clouds (`*.pcd`)
 
-5. Now use `OcCo_Torch/utils/LMDB_Writer.py` to convert all the  `pcd` files into `lmdb` dataloader:
+5. Now use <a href="../OcCo_Torch/utils/LMDB_Writer.py">OcCo_Torch/utils/LMDB_Writer.py</a> to convert all the  `pcd` files into `lmdb` dataloader:
 
 	```bash
 	python LMDB_Writer.py \

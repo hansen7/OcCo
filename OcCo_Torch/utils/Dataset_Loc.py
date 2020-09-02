@@ -47,12 +47,12 @@ def Dataset_Loc(dataset, fname, partial=True, bn=False, few_shot=False):
     elif dataset == 'scanobjectnn':
         NUM_CLASSES = 15
         if bn:
-            TRAIN_FILES = ['./data/ScanNetObjectNN/h5_files/main_split/training_objectdataset' + fname + '.h5']
-            VALID_FILES = ['./data/ScanNetObjectNN/h5_files/main_split/test_objectdataset' + fname + '.h5']
+            TRAIN_FILES = ['./data/ScanNetObjectNN/h5_files/main_split/training_objectdataset' + fname + '_1024.h5']
+            VALID_FILES = ['./data/ScanNetObjectNN/h5_files/main_split/test_objectdataset' + fname + '_1024.h5']
 
         else:
-            TRAIN_FILES = ['./data/ScanNetObjectNN/h5_files/main_split_nobg/training_objectdataset' + fname + '.h5']
-            VALID_FILES = ['./data/ScanNetObjectNN/h5_files/main_split_nobg/test_objectdataset' + fname + '.h5']
+            TRAIN_FILES = ['./data/ScanNetObjectNN/h5_files/main_split_nobg/training_objectdataset' + fname + '_1024.h5']
+            VALID_FILES = ['./data/ScanNetObjectNN/h5_files/main_split_nobg/test_objectdataset' + fname + '_1024.h5']
 
     else:
         raise ValueError('dataset not exists')

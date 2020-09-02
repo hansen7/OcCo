@@ -77,5 +77,6 @@ if __name__ == "__main__":
     plt.scatter(X_embedded[:, 0], X_embedded[:, 1], c=y_train, cmap=plt.cm.get_cmap("jet", NUM_CLASSES))
     plt.colorbar(ticks=range(1, NUM_CLASSES + 1))
     plt.clim(0.5, NUM_CLASSES + 0.5)
+    # plt.savefig('log/tsne/tsne_shapenet10_pcn.pdf')
     plt.show()
 

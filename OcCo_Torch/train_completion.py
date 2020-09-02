@@ -189,7 +189,7 @@ def main(args):
         writer.add_scalar('Loss', loss, step)
 
         if step % args.steps_print == 0:
-            MyLogger.logger.info('epoch %d  step %d  alpha %.2f  loss %.8f  time per mini-batch %.2f s' %
+            MyLogger.logger.info('epoch %d  step %d  alpha %.2f  loss %.8f  time per step %.2f s' %
                                  (epoch, step, alpha, loss, total_time / args.steps_print))
             total_time = 0
 
@@ -215,8 +215,8 @@ def main(args):
                     eval_loss += loss
                     eval_time += time.time() - start
 
-                MyLogger.logger.info('epoch %d  step %d  validation  loss %.8f' %
-                                     (epoch, step, eval_loss / num_eval_steps))
+                MyLogger.logger.info('epoch %d  step %d  validation  loss %.8f  time per step %.2f s' %
+                                     (epoch, step, eval_loss / num_eval_steps, eval_time / num_eval_steps))
 
         ''' === Visualisation === '''
         if step % args.steps_visu == 0:
@@ -229,18 +229,22 @@ def main(args):
                 plot_pcd_three_views(plot_path, pcds,
                                      ['input', 'coarse output', 'fine output', 'ground truth'])
 
-        if (epoch % args.epochs_save == 0) and \
-                not os.path.exists(os.path.join(MyLogger.checkpoints_dir, 'model_epoch_%d.pth' % epoch)):
+        trained_epoch = epoch - 1
+        if (trained_epoch % args.epochs_save == 0) and (trained_epoch != 0) and \
+                not os.path.exists(os.path.join(MyLogger.checkpoints_dir,
+                                                'model_epoch_%d.pth' % trained_epoch)):
             state = {
                 'step': step,
                 'epoch': epoch,
                 'model_state_dict': completer.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
             }
-            torch.save(state, os.path.join(MyLogger.checkpoints_dir, "model_epoch_%d.pth" % epoch))
-            MyLogger.logger.info('Model saved at %s/model_epoch_%d.pth\n' % (MyLogger.checkpoints_dir, epoch))
+            torch.save(state, os.path.join(MyLogger.checkpoints_dir,
+                                           "model_epoch_%d.pth" % trained_epoch))
+            MyLogger.logger.info('Model saved at %s/model_epoch_%d.pth\n'
+                                 % (MyLogger.checkpoints_dir, trained_epoch))
 
-    MyLogger.logger.info('Training Finished, Total Time: ',
+    MyLogger.logger.info('Training Finished, Total Time: ' +
                          str(datetime.timedelta(seconds=time.time() - train_start)))
 
 

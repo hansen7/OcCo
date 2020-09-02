@@ -10,7 +10,7 @@ import torch
 from chamfer_distance import ChamferDistance
 chamfer_dist = ChamferDistance()
 
-# points and points_reconstructed are (batch_size, n_points, 3), n_points can be different
+# both points clouds have shapes of (batch_size, n_points, 3), wherer n_points can be different
 
 dist1, dist2 = chamfer_dist(points, points_reconstructed)
 loss = (torch.mean(torch.sqrt(dist1)) + torch.mean(torch.sqrt(dist2)))/2  
@@ -21,4 +21,3 @@ This code has been integrated into the [Kaolin](https://github.com/NVIDIAGameWor
 
 ### Earth Mover Distance
 For the implementation of earth mover distance, we recommend [Kaichun's](https://github.com/daerduoCarey/PyTorchEMD) :)
-
