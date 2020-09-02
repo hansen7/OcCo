@@ -290,53 +290,73 @@ For the details of our implementation, please refer to description in the append
 
 ##### Generated Dataset:
 
-<img src="assets/data_overview_new.png" alt="image" class="center" width="650"/>
+<p align='center'>
+	<img src="assets/data_overview_new.png" alt="image" class="center" width="650"/>
+</p>
 
 ##### Completed Occluded Point Cloud:
 
 -- PointNet:
 
-<img src="assets/pointnet_combine.png" alt="image" class="center" width="700"/>
+<p align='center'>
+    <img src="assets/pointnet_combine.png" alt="image"/>
+</p>
+
+
 
 -- PCN:
 
-<img src="assets/pcn_combine.png" alt="image" class="center" width="700"/>
+<p align='center'>
+    <img src="assets/pcn_combine.png" alt="image"/>
+</p>
 
 -- DGCNN:
 
-<img src="assets/dgcnn_combine.png" alt="image" class="center" width="700"/>
+<p align='center'>
+    <img src="assets/dgcnn_combine.png" alt="image"/>
+</p>
 
 -- Failure Examples:
 
-<img src="assets/failure_combine.png" alt="image" class="center" width="700"/>
+<p align='center'>
+    <img src="assets/failure_combine.png" alt="image"/>
+</p>
 
 ##### T-SNE Visualization:
 
-<img src="assets/tsne.png" alt="image" class="center" width="700"/>
-
-
+<p align='center'>
+    <img src="assets/tsne.png" alt="image" class="center" width="700"/>
+</p>
 
 ##### Classification (linear SVM):
 
-<img src="assets/svm.png" alt="image" class="center" width="520"/>
+<p align='center'>
+	<img src="assets/svm.png" alt="image" class="center" width="520"/>
+</p>
 
 ##### Classification (Networks):
 
-<img src="assets/cls.png" alt="image" class="center" width="600"/>
+<p align='center'>
+	<img src="assets/cls.png" alt="image" class="center" width="600"/>
+</p>
 
 ##### Semantic Segmentation:
 
-<img src="assets/semseg.png" alt="image" class="center" width="600"/>
+<p align='center'>
+	<img src="assets/semseg.png" alt="image" class="center" width="600"/>
+</p>
 
 ##### Sample Efficiency:
 
-<img src="assets/eff.png" alt="image" class="center" width="600" />
+<p align='center'>
+	<img src="assets/eff.png" alt="image" class="center" width="600" />
+</p>
 
 ##### Learning Efficiency:
 
-<img src="assets/lr.png" alt="image" class="center" width="700" />
-
-
+<p align='center'>
+	<img src="assets/lr.png" alt="image" class="center" width="700" />
+</p>
 
 For the description and discussion of the results, please refer to our paper, thanks :)
 
