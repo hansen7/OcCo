@@ -20,4 +20,3 @@ python train_jigsaw.py \
 	--optimiser SGD \
 	--scheduler cos \
 	--log_dir modelnet40_dgcnn_scartch ; 
-

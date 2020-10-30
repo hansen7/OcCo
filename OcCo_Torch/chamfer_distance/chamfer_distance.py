@@ -1,5 +1,5 @@
 #  Ref: https://github.com/chrdiller/pyTorchChamferDistance
-import os, pdb, torch, torch.nn as nn
+import os, torch, torch.nn as nn
 from torch.utils.cpp_extension import load
 
 basedir = os.path.dirname(__file__)
@@ -94,4 +94,4 @@ if __name__ == '__main__':
 	dist1, dist2 = chamfer_dist(torch.Tensor(xyz1), torch.Tensor(xyz2))
 	loss = (torch.mean(dist1)) + (torch.mean(dist2))
 	print(loss)
-# loss.backward()
+	# loss.backward()

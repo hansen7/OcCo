@@ -43,6 +43,12 @@ Please see [here](https://github.com/charlesq34/pointnet/blob/master/sem_seg/dow
 
 
 
+#### Part Segmentation
+
+we use the data provided in the PointNet, which is also used in DGCNN.
+
+
+
 #### Jigsaw Puzzles
 
 Please check `utils/3DPC_Data_Gen.py` for details, as well as the original paper.

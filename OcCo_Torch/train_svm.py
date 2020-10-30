@@ -8,8 +8,8 @@ sys.path.append('models')
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from ModelNetDataLoader import General_CLSDataLoader_HDF5
 from Torch_Utility import copy_parameters
+# from sklearn.preprocessing import scale
 from torch.utils.data import DataLoader
-from sklearn.preprocessing import scale
 from Dataset_Loc import Dataset_Loc
 from sklearn import svm, metrics
 from tqdm import tqdm
@@ -22,14 +22,14 @@ def parse_args():
     parser.add_argument('--gpu', type=str, default='0', help='GPU [default: 0]')
     parser.add_argument('--model', default='pcn_util', help='model [default: pcn_util]')
     parser.add_argument('--batch_size', type=int, default=24, help='batch size [default: 24]')
-    parser.add_argument('--restore_path', type=str, help="path to pretrained weights [default: None]")
+    parser.add_argument('--restore_path', type=str, help="path to pre-trained weights [default: None]")
     parser.add_argument('--grid_search', action='store_true', help='opt parameters via Grid Search [default: False]')
 
     ''' === Dataset === '''
     parser.add_argument('--partial', action='store_true', help='partial objects [default: False]')
     parser.add_argument('--bn', action='store_true', help='with background noise [default: False]')
     parser.add_argument('--dataset', type=str, default='modelnet40', help='dataset [default: modelnet40]')
-    parser.add_argument('--fname', type=str, help='filename, used in ScanObjectNN or fewer data [default:]')
+    parser.add_argument('--fname', type=str, default="", help='filename, used in ScanObjectNN [default: ]')
 
     return parser.parse_args()
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     TRAIN_DATASET = General_CLSDataLoader_HDF5(file_list=TRAIN_FILES)
     TEST_DATASET = General_CLSDataLoader_HDF5(file_list=TEST_FILES)
     trainDataLoader = DataLoader(TRAIN_DATASET, batch_size=args.batch_size, shuffle=True, num_workers=4)
-    testDataLoader = DataLoader(TEST_DATASET, batch_size=args.batch_size, shuffle=True, num_workers=4)
+    testDataLoader = DataLoader(TEST_DATASET, batch_size=args.batch_size, shuffle=Falses, num_workers=4)
 
     MODEL = importlib.import_module(args.model)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     linear_svm = svm.SVC(kernel='linear')
     linear_svm.fit(X_train, y_train)
     y_pred = linear_svm.predict(X_test)
-    print("Simple Linear SVC accuracy:", metrics.accuracy_score(y_test, y_pred), "\n")
+    print("\n", "Simple Linear SVC accuracy:", metrics.accuracy_score(y_test, y_pred), "\n")
 
     rbf_svm = svm.SVC(kernel='rbf')
     rbf_svm.fit(X_train, y_train)

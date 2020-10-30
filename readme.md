@@ -1,22 +1,26 @@
-## OcCo: Occlusion Completion for Point Cloud Pre-Training
-This repository is the official implementation of "OcCo: Occlusion Completion for Point Cloud Pre-Training"
+## OcCo: Pre-Training by Completing Point Clouds
+This repository is the official implementation of "OcCo: Pre-Training by Completing Point Clouds"
 
-[Paper] [[Project Page](https://hansen7.github.io/OcCo/)] [Code is here]
+[[Paper](https://arxiv.org/abs/2010.01089)] [[Project Page](https://hansen7.github.io/OcCo/)] [Code is here]
 
 ### Intro
 
 ![image](assets/teaser.png)
 
-In this work, we train a completion model that learns how to reconstruct the occluded points, given the partial point cloud. In this way, our method learns a pre-trained representation that can identify the visual constraints inherently embedded in real-world point clouds. 
+In this work, we train a completion model that learns how to reconstruct the occluded points, given the partial observations. In this way, our method learns a pre-trained encoder that can identify the visual constraints inherently embedded in real-world point clouds. 
 
 We call our method **Occlusion Completion (OcCo)**. We demonstrate that OcCo learns representations that: improve generalization on downstream tasks over prior pre-training methods, transfer to different datasets, reduce training time, and improve labeled sample efficiency.
 
 
 ### Citation
-we will release the paper in the near future :)
+Our paper is preprinted on arxiv:
 
 ```
-
+@article{OcCo2020,
+title={Pre-Training by Completing Point Clouds},
+author={Hanchen Wang and Qi Liu and Xiangyu Yue and Joan Lasenby and Matthew J. Kusner},
+journal={arXiv preprint arXiv:2010.01089},
+year={2020} }
 ```
 
 ### Usage
@@ -65,7 +69,7 @@ For the details in the data setup, please see <a href="OcCo_Torch/data/readme.md
 
 ##### Training Scripts:
 
-We unify the training of all three models (`PointNet`, `PCN` and `DGCNN`) in <a href="OcCo_Torch/train_completion.py">train_completion.py</a>. We also provide the bash template for training each models, see <a href="OcCo_Torch/bash_template/train_completion_template.sh">bash_template/train_completion_template.sh</a> for details:
+We unify the training of all three models (`PointNet`, `PCN` and `DGCNN`) in <a href="OcCo_Torch/train_completion.py">train_completion.py</a> as well as the bash templates, see <a href="OcCo_Torch/bash_template/train_completion_template.sh">bash_template/train_completion_template.sh</a> for details:
 
 ```bash
 #!/usr/bin/env bash
@@ -90,31 +94,29 @@ python train_completion.py \
 
 ##### Pre-Trained Weights
 
-We will provide the OcCo pre-trained models for all the three models, you can use them for visualization of completing self-occluded point cloud, fine tuning on classification and semantic segmentation tasks.
+We will provide the OcCo pre-trained models for all the three models, you can use them for visualization of completing self-occluded point cloud, fine tuning on classification, scene semantic and object part segmentation tasks.
 
 
 
 #### 3) Sanity Check on Pre-Training
 
-We use t-SNE for dimensionality reduction to visualize the object embeddings of the ShapeNet10 data obtained through OcCo pre-trained encoders on the ModelNet40 dataset, see <a href="OcCo_Torch/utils/TSNE_Visu.py">utils/TSNE_Visu.py</a> for details.
+We use single channel values as well as the t-SNE for dimensionality reduction to visualize the learned object embeddings on objects from the ShapeNet10, while the encoders are pre-trained on the ModelNet40 dataset, see <a href="OcCo_Torch/utils/TSNE_Visu.py">utils/TSNE_Visu.py</a> for details.
 
-We also train a Support Vector Machine (SVM) based on embeddings output by these OcCo pre-trained encoders for classification tasks. It is in <a href="OcCo_Torch/train_svm.py">train_svm.py</a>. We also provide the bash template for training, see <a href="OcCo_Torch/bash_template/train_svm_template.sh">bash_template/train_svm_template.sh</a> for details:
+We also train a Support Vector Machine (SVM) based on the learned embeddings object recognition. It is in <a href="OcCo_Torch/train_svm.py">train_svm.py</a>. We also provide the bash template for this, see <a href="OcCo_Torch/bash_template/train_svm_template.sh">bash_template/train_svm_template.sh</a> for details:
 
 ```bash
 #!/usr/bin/env bash
 
 cd ../
 
-# grid search the best svm parameters with rbf kernel on ModelNet40 encoded by OcCo PCN
+# fit a simple linear SVM on ModelNet40 with OcCo PCN
 python train_svm.py \
 	--gpu 0 \
-	--grid_search \
 	--model pcn_util \
 	--dataset modelnet40 \
 	--restore_path log/completion/modelnet_pcn_vanilla/checkpoints/best_model.pth ;
 
-
-# ... on ScanObjectNN(OBJ_BG) encoded by OcCo DGCNN
+# grid search the best svm parameters with rbf kernel on ScanObjectNN(OBJ_BG) with OcCo DGCNN
 python train_svm.py \
 	--gpu 0 \
 	--grid_search \
@@ -127,7 +129,7 @@ python train_svm.py \
 
 
 
-#### 4) Fine Tuning - Classification
+#### 4) Fine Tuning Task - Classification
 
 ##### Data Usage:
 
@@ -135,7 +137,7 @@ For the details in the data setup, please see <a href="OcCo_Torch/data/readme.md
 
 ##### Training/Testing Scripts:
 
-We unify the training and testing of all three models (`PointNet`, `PCN` and `DGCNN`) in <a href="OcCo_Torch/train_cls.py">train_cls.py</a>. We also provide the bash template for training each models from scratch, JigSaw/OcCo Pre-Trained checkpoints, see <a href="OcCo_Torch/bash_template/train_cls_template.sh">bash_template/train_cls_template.sh</a> for details:
+We unify the training and testing of all three models (`PointNet`, `PCN` and `DGCNN`) in <a href="OcCo_Torch/train_cls.py">train_cls.py</a>. We also provide the bash template for training each models from scratch, JigSaw/OcCo pre-trained checkpoints, see <a href="OcCo_Torch/bash_template/train_cls_template.sh">bash_template/train_cls_template.sh</a> for details:
 
 ```bash
 #!/usr/bin/env bash
@@ -149,7 +151,6 @@ python train_cls.py \
 	--dataset modelnet40 \
 	--log_dir modelnet40_pointnet_scratch ;
 
-
 # fine tuning pcn on ScanNet10, using jigsaw pre-trained checkpoints
 python train_cls.py \
 	--gpu 0 \
@@ -158,7 +159,6 @@ python train_cls.py \
 	--log_dir scannet10_pcn_jigsaw \
 	--restore \
 	--restore_path log/completion/modelnet_pcn_vanilla/checkpoints/best_model.pth ;
-
 
 # fine tuning dgcnn on ScanObjectNN(OBJ_BG), using jigsaw pre-trained checkpoints
 python train_cls.py \
@@ -173,11 +173,9 @@ python train_cls.py \
 	--restore \
 	--restore_path log/completion/modelnet_dgcnn_vanilla/checkpoints/best_model.pth ;
 
-
 # test pointnet on ModelNet40 from pre-trained checkpoints
 python train_cls.py \
 	--gpu 1 \
-	--epoch 1 \
 	--mode test \
 	--model pointnet_cls \
 	--dataset modelnet40 \
@@ -188,7 +186,7 @@ python train_cls.py \
 
 
 
-#### 5) Fine Tuning - Semantic Segmentation
+#### 5) Fine Tuning Task - Semantic Segmentation
 
 ##### Data Usage:
 
@@ -196,7 +194,7 @@ For the details in the data setup, please see <a href="OcCo_Torch/data/readme.md
 
 ##### Training/Testing Scripts:
 
-We unify the training and testing of all three models (`PointNet`, `PCN` and `DGCNN`) in <a href="OcCo_Torch/train_semseg.py">train_semseg.py</a>. We also provide the bash template for training each models from scratch, JigSaw/OcCo Pre-Trained checkpoints, see <a href="OcCo_Torch/bash_template/train_semseg_template.sh">bash_template/train_semseg_template.sh</a> for details:
+We unify the training and testing of all three models (PointNet, PCN and DGCNN) in <a href="OcCo_Torch/train_semseg.py">train_semseg.py</a>. We also provide the bash template for training each models from scratch, JigSaw/OcCo pre-trained checkpoints, see <a href="OcCo_Torch/bash_template/train_semseg_template.sh">bash_template/train_semseg_template.sh</a> for details:
 
 ```bash
 #!/usr/bin/env bash
@@ -266,7 +264,71 @@ We recommended using relevant code snippets in [RandLA-Net](https://github.com/Q
 
 
 
-#### 6) Data Generation (Create Your Own Dataset for OcCo Pre-Training)
+#### 6) Fine Tuning Task - Part Segmentation
+
+##### Data Usage:
+
+For the details in the data setup, please see <a href="OcCo_Torch/data/readme.md">data/readme.md</a>.
+
+##### Training/Testing Scripts:
+
+We unify the training and testing of all three models (PointNet, PCN and DGCNN) in <a href="OcCo_Torch/train_partseg.py">train_partseg.py</a>. We also provide the bash template for training each models from scratch, JigSaw/OcCo pre-trained checkpoints, see <a href="OcCo_Torch/bash_template/train_partseg_template.sh">bash_template/train_partseg_template.sh</a> for details:
+
+```bash
+#!/usr/bin/env bash
+
+cd ../
+
+# training pointnet on ShapeNetPart, from scratch
+python train_partseg.py \
+	--gpu 0 \
+	--normal \
+	--bn_decay \
+	--xavier_init \
+	--model pointnet_partseg \
+    --log_dir pointnet_scratch ;
+
+
+# fine tuning pcn on ShapeNetPart, using jigsaw pre-trained checkpoints
+python train_partseg.py \
+	--gpu 0 \
+	--normal \
+	--bn_decay \
+	--xavier_init \
+	--model pcn_partseg \
+	--log_dir pcn_jigsaw \
+	--restore \
+	--restore_path log/jigsaw/modelnet_pcn_vanilla/checkpoints/best_model.pth ;
+
+
+# fine tuning dgcnn on ShapeNetPart, using occo pre-trained checkpoints
+python train_partseg.py \
+	--gpu 0,1 \
+	--normal \
+	--use_sgd \
+	--xavier_init \
+	--scheduler cos \
+	--model dgcnn_partseg \
+	--log_dir dgcnn_occo \
+	--restore \
+	--restore_path log/completion/modelnet_dgcnn_vanilla/checkpoints/best_model.pth ;
+
+
+# test fine tuned pointnet on ShapeNetPart, using multiple votes
+python train_partseg.py \
+	--gpu 1 \
+	--epoch 1 \
+	--mode test \
+	--num_votes 3 \
+	--model pointnet_partseg \
+	--log_dir pointnet_scratch \
+	--restore \
+	--restore_path log/partseg/pointnet_occo/checkpoints/best_model.pth ;
+```
+
+
+
+#### 6) OcCo Data Generation (Create Your Own Dataset for OcCo Pre-Training)
 
 For the details in the self-occluded point cloud generation, please see <a href="render/readme.md">render/readme.md</a>.
 
@@ -274,7 +336,7 @@ For the details in the self-occluded point cloud generation, please see <a href=
 
 #### 7) Just Completion (Complete Your Own Data with Pre-Trained Model)
 
-We will also provide the best OcCo checkpoints we have for the completion tasks, you can use it for completing your occluded point cloud data.
+You can use it for completing your occluded point cloud data with our provided OcCo checkpoints.
 
 
 
@@ -322,7 +384,7 @@ For the details of our implementation, please refer to description in the append
     <img src="assets/failure_combine.png" alt="image"/>
 </p>
 
-##### T-SNE Visualization:
+##### Visualization of learned features:
 
 <p align='center'>
     <img src="assets/tsne.png" alt="image" class="center" width="700"/>
@@ -334,7 +396,7 @@ For the details of our implementation, please refer to description in the append
 	<img src="assets/svm.png" alt="image" class="center" width="520"/>
 </p>
 
-##### Classification (Networks):
+##### Classification:
 
 <p align='center'>
 	<img src="assets/cls.png" alt="image" class="center" width="600"/>
@@ -344,6 +406,11 @@ For the details of our implementation, please refer to description in the append
 
 <p align='center'>
 	<img src="assets/semseg.png" alt="image" class="center" width="600"/>
+</p>
+##### Part Segmentation:
+
+<p align='center'>
+	<img src="assets/partseg.png" alt="image" class="center" width="600"/>
 </p>
 
 ##### Sample Efficiency:
@@ -382,6 +449,8 @@ https://github.com/PointCloudLibrary/pcl
 
 https://github.com/AnTao97/dgcnn.pytorch
 
+https://github.com/HuguesTHOMAS/KPConv
+
 https://github.com/QingyongHu/RandLA-Net
 
 https://github.com/chrdiller/pyTorchChamferDistance
@@ -390,5 +459,4 @@ https://github.com/yanx27/Pointnet_Pointnet2_pytorch
 
 https://github.com/AnTao97/UnsupervisedPointCloudReconstruction
 
-We appreciate the help from the responsive, supportive and knowledge technicians Peter and Raf from Cambridge Engineering Department.
-
+We appreciate the help from the responsive and supportive technicians, Peter and Raf, from Cambridge Engineering Department :)

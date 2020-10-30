@@ -2,6 +2,14 @@
 
 cd ../
 
+# fit a linear svm on ModelNet40 encoded by OcCo PointNet
+python train_svm.py \
+	--gpu 0 \
+	--model pointnet_util \
+	--dataset modelnet40 \
+	--restore_path log/completion/modelnet_pointnet_vanilla/checkpoints/best_model.pth ;
+
+
 # grid search the best parameters of a svm with rbf kernel on ModelNet40 encoded by OcCo PCN
 python train_svm.py \
 	--gpu 0 \

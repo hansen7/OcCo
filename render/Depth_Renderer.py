@@ -24,7 +24,7 @@ def random_pose():
     # Set camera pointing to the origin and 1 unit away from the origin
     t = np.expand_dims(R[:, 2], 1)  # select the third column, reshape into (3, 1)-vector
 
-    # pose -> 4 * 4, 表示一个camera的position??
+    # pose -> 4 * 4
     pose = np.concatenate([np.concatenate([R, t], 1), [[0, 0, 0, 1]]], 0)
     return pose
 

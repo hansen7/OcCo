@@ -41,4 +41,3 @@ python train_semseg.py \
 	--restore \
 	--restore_path log/completion/modelnet_dgcnn_vanilla/checkpoints/best_model.pth ;
 done
-

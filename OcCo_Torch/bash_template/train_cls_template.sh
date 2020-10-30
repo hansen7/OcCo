@@ -17,7 +17,7 @@ python train_cls.py \
 	--dataset scannet10 \
 	--log_dir scannet10_pcn_jigsaw \
 	--restore \
-	--restore_path log/completion/modelnet_pcn_vanilla/checkpoints/best_model.pth ;
+	--restore_path log/jigsaw/modelnet_pcn_vanilla/checkpoints/best_model.pth ;
 
 
 # fine tuning dgcnn on ScanObjectNN(OBJ_BG), using jigsaw pre-trained checkpoints

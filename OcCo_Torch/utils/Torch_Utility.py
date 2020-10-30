@@ -39,14 +39,12 @@ def weights_init(m):
     find especially useful for completion and segmentation Tasks
     """
     classname = m.__class__.__name__
-    if (classname.find('Conv1d') != -1) \
-            or (classname.find('Conv2d') != -1) \
-            or (classname.find('Linear') != -1):
+    if (classname.find('Conv1d') != -1) or (classname.find('Conv2d') != -1) or (classname.find('Linear') != -1):
         torch.nn.init.xavier_normal_(m.weight.data)
-        torch.nn.init.constant_(m.bias.data, 0.0)
+        if m.bias is not None:
+            torch.nn.init.constant_(m.bias.data, 0.0)
 
 
 def bn_momentum_adjust(m, momentum):
-    if isinstance(m, torch.nn.BatchNorm2d) \
-            or isinstance(m, torch.nn.BatchNorm1d):
+    if isinstance(m, torch.nn.BatchNorm2d) or isinstance(m, torch.nn.BatchNorm1d):
         m.momentum = momentum
