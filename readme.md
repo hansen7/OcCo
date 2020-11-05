@@ -1,13 +1,13 @@
 ## OcCo: Pre-Training by Completing Point Clouds
-This repository is the official implementation of "OcCo: Pre-Training by Completing Point Clouds"
+This repository is the official implementation of paper: "OcCo: Pre-Training by Completing Point Clouds"
 
-[[Paper](https://arxiv.org/abs/2010.01089)] [[Project Page](https://hansen7.github.io/OcCo/)] [Code is here]
+[[Paper](https://arxiv.org/abs/2010.01089)] [[Project Page](https://hansen7.github.io/OcCo/)]
 
 ### Intro
 
 ![image](assets/teaser.png)
 
-In this work, we train a completion model that learns how to reconstruct the occluded points, given the partial observations. In this way, our method learns a pre-trained encoder that can identify the visual constraints inherently embedded in real-world point clouds. 
+In this work, we train a completion model that learns how to reconstruct the occluded points, given the partial observations. In this way, our method learns a pre-trained encoder that can identify the visual constraints inherently embedded in real-world point clouds.
 
 We call our method **Occlusion Completion (OcCo)**. We demonstrate that OcCo learns representations that: improve generalization on downstream tasks over prior pre-training methods, transfer to different datasets, reduce training time, and improve labeled sample efficiency.
 
@@ -94,7 +94,7 @@ python train_completion.py \
 
 ##### Pre-Trained Weights
 
-We will provide the OcCo pre-trained models for all the three models, you can use them for visualization of completing self-occluded point cloud, fine tuning on classification, scene semantic and object part segmentation tasks.
+We will provide the OcCo pre-trained models for all the three models [here](https://drive.google.com/drive/folders/15H1JH9oTfp_sVkj9nwgnThZHRI9ef2bT?usp=sharing), you can use them for visualization of completing self-occluded point cloud, fine tuning on classification, scene semantic and object part segmentation tasks.
 
 
 
@@ -365,13 +365,11 @@ For the details of our implementation, please refer to description in the append
 </p>
 
 
-
 -- PCN:
 
 <p align='center'>
     <img src="assets/pcn_combine.png" alt="image"/>
 </p>
-
 -- DGCNN:
 
 <p align='center'>
@@ -393,31 +391,33 @@ For the details of our implementation, please refer to description in the append
 ##### Classification (linear SVM):
 
 <p align='center'>
-	<img src="assets/svm.png" alt="image" class="center" width="520"/>
+	<img src="assets/svm.png" alt="image" class="center" width="700"/>
 </p>
+
 
 ##### Classification:
 
 <p align='center'>
-	<img src="assets/cls.png" alt="image" class="center" width="600"/>
+	<img src="assets/cls.png" alt="image" class="center" width="700"/>
 </p>
-
 ##### Semantic Segmentation:
 
 <p align='center'>
-	<img src="assets/semseg.png" alt="image" class="center" width="600"/>
+	<img src="assets/semseg.png" alt="image" class="center" width="700"/>
 </p>
 ##### Part Segmentation:
 
 <p align='center'>
-	<img src="assets/partseg.png" alt="image" class="center" width="600"/>
+	<img src="assets/partseg.png" alt="image" class="center" width="700"/>
 </p>
+
 
 ##### Sample Efficiency:
 
 <p align='center'>
-	<img src="assets/eff.png" alt="image" class="center" width="600" />
+	<img src="assets/eff.png" alt="image" class="center" width="700" />
 </p>
+
 
 ##### Learning Efficiency:
 
@@ -433,7 +433,7 @@ For the description and discussion of the results, please refer to our paper, th
 
 The code of this project is released under the MIT License. 
 
-We would like to thank and acknowledge references from the following repositories:
+We would like to thank and acknowledge referenced codes from the following repositories:
 
 https://github.com/wentaoyuan/pcn
 
@@ -459,4 +459,4 @@ https://github.com/yanx27/Pointnet_Pointnet2_pytorch
 
 https://github.com/AnTao97/UnsupervisedPointCloudReconstruction
 
-We appreciate the help from the responsive and supportive technicians, Peter and Raf, from Cambridge Engineering Department :)
+We appreciate the help from the supportive technicians, Peter and Raf, from Cambridge Engineering :)

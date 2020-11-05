@@ -2,7 +2,7 @@
 
 #### OcCo
 
-We construct the training data based on ModelNet in the same format of the [data](https://drive.google.com/drive/folders/1M_lJN14Ac1RtPtEQxNlCV9e8pom3U6Pa) provided in PCN which is based on ShapeNet. You can find our generated dataset based on ModelNet40 here, this is similar with the resources used in the PCN and its follow-ups (summarised [here](https://github.com/hansen7/OcCo/issues/2)).
+We construct the training data based on ModelNet in the same format of the [data](https://drive.google.com/drive/folders/1M_lJN14Ac1RtPtEQxNlCV9e8pom3U6Pa) provided in PCN which is based on ShapeNet. **You can find our generated dataset based on ModelNet40 [here](https://drive.google.com/drive/folders/1gXNcARYxAh8I4UskbDprJ5fkbDSKPAsH?usp=sharing)**, this is similar with the resources used in the PCN and its follow-ups (summarised [here](https://github.com/hansen7/OcCo/issues/2)).
 
 If you want to generate your own data, please check our provided instructions from <a href="../../render/readme.md">render/readme.md</a>.
 
