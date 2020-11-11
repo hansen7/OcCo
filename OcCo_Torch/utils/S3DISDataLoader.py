@@ -71,6 +71,42 @@ class S3DISDataset_HDF5(Dataset):
         return len(self.data_batches)
 
 
+class CityDataset_HDF5(Dataset):
+    """Chopped Scene"""
+
+    def __init__(self, root='data/urban_pc', split='train'):
+        self.root = root
+        assert split in ['train', 'test']
+        self.all_files = self.getDataFiles(os.path.join(self.root, split))
+        self.scene_points_list = []
+        self.semantic_labels_list = []
+
+        for h5_filename in self.all_files:
+            data_batch, label_batch = self.loadh5DataFile(os.path.join(self.root, split, h5_filename))
+            self.scene_points_list.append(data_batch)
+            self.semantic_labels_list.append(label_batch)
+
+        self.data_batches = np.concatenate(self.scene_points_list, 0)
+        self.label_batches = np.concatenate(self.semantic_labels_list, 0)
+
+    @staticmethod
+    def getDataFiles(list_filename):
+        return os.listdir(list_filename)
+
+    @staticmethod
+    def loadh5DataFile(PathtoFile):
+        f = h5py.File(PathtoFile, 'r')
+        return f['data'][:], f['label'][:]
+
+    def __getitem__(self, index):
+        points = self.data_batches[index, :]
+        labels = self.label_batches[index].astype(np.int32)
+        return points, labels
+
+    def __len__(self):
+        return len(self.data_batches)
+
+
 class S3DISDataset(Dataset):
     """Chopped Scene"""
     def __init__(self, root, block_points=4096, split='train', test_area=5, with_rgb=True, use_weight=True,
