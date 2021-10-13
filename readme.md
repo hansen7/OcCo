@@ -1,5 +1,5 @@
-## OcCo: Pre-Training by Completing Point Clouds
-This repository is the official implementation of paper: "OcCo: Pre-Training by Completing Point Clouds"
+## OcCo: Unsupervised Point Cloud Pre-training via Occlusion Completion
+This repository is the official implementation of paper: "OcCo: Unsupervised Point Cloud Pre-training via Occlusion Completion"
 
 [[Paper](https://arxiv.org/abs/2010.01089)] [[Project Page](https://hansen7.github.io/OcCo/)]
 
@@ -16,16 +16,17 @@ We call our method **Occlusion Completion (OcCo)**. We demonstrate that OcCo lea
 Our paper is preprinted on arxiv:
 
 ```
-@article{OcCo2020,
-title={Pre-Training by Completing Point Clouds},
-author={Hanchen Wang and Qi Liu and Xiangyu Yue and Joan Lasenby and Matthew J. Kusner},
-journal={arXiv preprint arXiv:2010.01089},
-year={2020} }
+@inproceedings{OcCo,
+	title = {Unsupervised Point Cloud Pre-Training via Occlusion Completion},
+	author = {Hanchen Wang and Qi Liu and Xiangyu Yue and Joan Lasenby and Matthew J. Kusner},
+	year = 2021,
+	booktitle = {International Conference on Computer Vision, ICCV}
+}
 ```
 
 ### Usage
 
-We provide codes in both PyTorch (1.3): <a href="OcCo_Torch">OcCo_Torch</a> and TensorFlow (1.13-1.15): <a href="OcCo_TF">OcCo_TF</a>, both can reproduce the results reported in the paper. We also provide with docker configuration <a href="OcCo_Torch/docker">docker</a>. Our recommended development environment PyTorch + docker, the following description are based on  <a href="OcCo_Torch">OcCo_Torch</a>, we refer the readme in the  <a href="OcCo_TF">OcCo_TF</a> for the details of TensorFlow implementation.
+We provide codes in both PyTorch (1.3): <a href="OcCo_Torch">OcCo_Torch</a> (recommended) and TensorFlow (1.13-1.15): <a href="OcCo_TF">OcCo_TF</a>, both can reproduce the results reported in the paper. We also provide with docker configuration <a href="OcCo_Torch/docker">docker</a>. Our recommended development environment PyTorch + docker, the following description are based on  <a href="OcCo_Torch">OcCo_Torch</a>, we refer the readme in the  <a href="OcCo_TF">OcCo_TF</a> for the details of TensorFlow implementation.
 
 
 
