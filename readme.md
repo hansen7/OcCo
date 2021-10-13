@@ -1,5 +1,5 @@
 ## OcCo: Unsupervised Point Cloud Pre-training via Occlusion Completion
-This repository is the official implementation of paper: "OcCo: Unsupervised Point Cloud Pre-training via Occlusion Completion"
+This repository is the official implementation of paper: "Unsupervised Point Cloud Pre-training via Occlusion Completion"
 
 [[Paper](https://arxiv.org/abs/2010.01089)] [[Project Page](https://hansen7.github.io/OcCo/)]
 
@@ -26,7 +26,7 @@ Our paper is preprinted on arxiv:
 
 ### Usage
 
-We provide codes in both PyTorch (1.3): <a href="OcCo_Torch">OcCo_Torch</a> (recommended) and TensorFlow (1.13-1.15): <a href="OcCo_TF">OcCo_TF</a>, both can reproduce the results reported in the paper. We also provide with docker configuration <a href="OcCo_Torch/docker">docker</a>. Our recommended development environment PyTorch + docker, the following description are based on  <a href="OcCo_Torch">OcCo_Torch</a>, we refer the readme in the  <a href="OcCo_TF">OcCo_TF</a> for the details of TensorFlow implementation.
+We provide codes in both PyTorch (1.3): <a href="OcCo_Torch">OcCo_Torch</a> and TensorFlow (1.13-1.15): <a href="OcCo_TF">OcCo_TF</a>. We also provide with docker configuration <a href="OcCo_Torch/docker">docker</a>. Our recommended development environment PyTorch + docker, the following descriptions are based on  <a href="OcCo_Torch">OcCo_Torch</a>, we refer the readme in the  <a href="OcCo_TF">OcCo_TF</a> for the details of TensorFlow implementation.
 
 
 
